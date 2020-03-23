@@ -1,0 +1,18 @@
+{
+  "name": "server_js",
+  "version": "1.0.0",
+  "description": "serverside js",
+  "main": "hello.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jade": "^1.11.0",
+    "uglify-js": "^3.8.0",
+    "underscore": "^1.9.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
