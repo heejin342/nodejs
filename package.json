@@ -4,8 +4,13 @@
   "description": "serverside js",
   "main": "hello.js",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
+    "express-session": "^1.17.0",
     "jade": "^1.11.0",
+    "multer": "^1.4.2",
+    "node-mysql": "^0.4.2",
     "uglify-js": "^3.8.0",
     "underscore": "^1.9.2"
   },

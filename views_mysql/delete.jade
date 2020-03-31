@@ -1,0 +1,16 @@
+html
+  head
+    meta(charset='utf8')
+  body
+    h1
+      a(href='/topic') Serverside js
+    ul
+      each topic in topics
+        li
+          a(href='/topic/'+topic.id)= topic.title
+  article
+    h1= 'DELETE?'+topic.title
+    form(action='/topic/'+topic.id+'/delete' method='post')
+      p
+        input(type='submit' value='YES')
+    a(href='/topic/'+topic.id) no

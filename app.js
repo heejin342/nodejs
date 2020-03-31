@@ -1,14 +1,36 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
 // 뷰엔진으로 제이드를 이용한다.
 app.locals.pretty = true;
 app.set('view engine' , 'jade')
-
 app.set('veiws', './views')
 
 // 정적파일이 위치할 디렉토리를 정함(Wpublic)
 // 이런식으로 이미지도 가능하다.
 app.use(express.static('public'));
+
+// 사용자가 접속하면 바디파서가 작동해서 post 형식으로 보낸 요청을 후생할 수 있도록 해줌
+// 얘가 있어야지 app.post가 작동한다. 여기서는 body의 객체를 사용할 수 있다.
+app.use(bodyParser.urlencoded({extended:false}))
+
+// 이게 겟방식이 아니라 post 면 form.jade에서 바꿔주고 , url에 쿼리스트링이 안보임
+app.get('/form', function(req, res){
+  res.render('form');
+});
+app.get('/form_reciever', function(req, res){
+  // res.send('Hello,Get')
+  var title = req.query.title;
+  var description = req.query.description;
+  res.send(title + ',' + description);
+});
+app.post('/form_reciever',function(req, res){
+  // res.send('hello,post')
+  var title= req.body.title;
+  var description = req.body.description;
+  res.send(title + ',' + description);
+});
+
 
 
 // 이게 쿼리스트링방식 . 밑에는 시멘틱방식
@@ -34,18 +56,20 @@ app.get('/topic', function(req, res){
 app.get('/pathtopic/:id' , function(req,res){
   var topics = ['JS is ...' , 'Nodejs is ...', 'Express is ...'];
   var output = `
-    <a href= "/topic?id=0">js</a><br>
-    <a href= "/topic?id=1">Nodejs</a><br>
-    <a href= "/topic?id=2">Express</a><br><br>
+    <a href= "/pathtopic/0">js</a><br>
+    <a href= "/pathtopic/1">Nodejs</a><br>
+    <a href= "/pathtopic/2">Express</a><br><br>
     ${topics[req.params.id]}
   `
-  res.send(output)
+  res.send(output);
 });
+
 
 //여러개의 파라미터에 대한 시멘틱방식
 app.get('/pathtopic/:id/:mode' , function(req,res){
   res.send(req.params.id + ','+ req.params.mode)
 });
+
 
 app.get('/template', function(req , res){
     // res.send(); 가 아니라 temp  라는 템플릿파일을 렌더링해줘야하낟.
@@ -53,8 +77,8 @@ app.get('/template', function(req , res){
     // 현재시간 출력
     // time 이랑 title 은 jade 파일에 변수를 전달하는ㄴ 의미를 가진다
     res.render('temp' , {time:Date(), _title:'Jade'});
+});
 
-})
 
 // 여러페이지 라우팅
 // 홈화면에 들어왔을때 이 함수가 실행된다.
